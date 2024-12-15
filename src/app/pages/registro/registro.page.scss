@@ -1,0 +1,44 @@
+.imagen {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    height: 25vh; /* Asegura que ocupe el 100% de la altura de la pantalla */
+  }
+  
+  .logo {
+    border-radius: 25px;
+    width: 150px; /* Ajusta el tamaño de la imagen */
+    height: auto; /* Mantiene la proporción de la imagen */
+  }
+
+  .custom-card {
+    --background: #3580f1; /* Color de fondo de la tarjeta */
+    --ion-card-background: #275fb4; /* Asegura compatibilidad con versiones anteriores */
+    border-radius: 15px; /* Bordes redondeados */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra de la tarjeta */
+    padding: 15px; /* Espaciado interno */
+    color: #ffffff; /* Color del texto */
+  }
+  
+  .custom-card ion-input {
+    --background: #3580f1; /* Fondo del input */
+    --color: #ffffff; /* Color del texto */
+    --placeholder-color: #ffffff; /* Color del placeholder */
+    --border-color: #1a6deb; /* Color del borde */
+    border: 1px solid var(--border-color); /* Asegúrate de aplicar un borde */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno */
+  }
+  
+  
+  .custom-card ion-button {
+    --background: #ff9999; /* Fondo del botón */
+    --color: #ff2222; /* Color del texto */
+    --border-color: #ff4545; /* Color del borde */
+  }
+  
+  .custom-card ion-input .helper-text {
+    --color: #ffa726; /* Color del texto de ayuda (helperText) */
+    font-size: 12px; /* Ajusta el tamaño del texto de ayuda */
+    font-style: italic; /* Opcional: estilo en cursiva */
+  }

@@ -1,0 +1,31 @@
+<ion-content class="ion-padding">
+
+  <div class="imagen">
+    <img src="../../../assets/img/logoAIEP.png" alt="Logo de Mayor Activo" class="logo">
+  </div>
+
+  <ion-card class="custom-card">
+    <form [formGroup]="usuario" (ngSubmit)="registroUsuario()" style="margin: 20px;">
+      <ion-input formControlName="rut" type="text" label="RUT" labelPlacement="stacked" fill="outline" placeholder="12345678-9"></ion-input>
+      <br>
+      <ion-input formControlName="nombre" type="text" label="Nombre" labelPlacement="stacked" fill="outline" placeholder="Nombre" ></ion-input>
+      <br>
+      <ion-input formControlName="apellido" type="text" label="Apellido" labelPlacement="stacked" fill="outline" placeholder="Apellido"></ion-input>
+      <br>
+      <ion-input formControlName="correo" type="email" label="Correo" labelPlacement="stacked" fill="outline" placeholder="correo@correo.com"></ion-input>
+      <br>
+      <ion-input formControlName="contrasena" type="password" label="Contraseña" labelPlacement="stacked" fill="outline" placeholder="Debe contener como minimo 6 caracteres.">
+        <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+      </ion-input>
+      <br>
+      <ion-button [disabled]="!usuario.valid" class="custom-button" expand="full" fill="outline" shape="round" type="submit">Registrarse</ion-button>
+    </form>
+  </ion-card>
+
+  <p style="text-align: center; padding: 5px;">
+    <span style="background-color: #99bdff; padding: 10px 15px; border-radius: 25px; display: inline-block;">
+      ¿Ya tienes cuenta? 
+      <a routerLink="/login" style="color: #c72121; font-weight: bold; text-decoration: none;">¡Inicia sesión!</a>
+    </span>
+  </p>
+</ion-content>

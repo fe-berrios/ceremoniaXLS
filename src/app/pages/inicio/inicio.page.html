@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Inicio</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Subir archivo Excel</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <input type="file" (change)="onFileChange($event)" />
+      <ion-button expand="block" (click)="uploadToFirebase()">Subir a Firebase</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Datos Subidos</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <table style="width: 100%; border-collapse: collapse; text-align: left;">
+        <thead>
+          <tr>
+            <!-- Generar encabezados dinámicamente -->
+            <th *ngFor="let column of columns" style="border: 1px solid #ccc; padding: 8px;">
+              {{ column }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of excelData">
+            <!-- Generar celdas dinámicamente -->
+            <td *ngFor="let column of columns" style="border: 1px solid #ccc; padding: 8px;">
+              {{ row[column] }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
