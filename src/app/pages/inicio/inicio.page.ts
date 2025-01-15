@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastController, LoadingController } from '@ionic/angular';
+import { ToastController, LoadingController, AlertController } from '@ionic/angular';
 import { ExcelService } from 'src/app/services/excel.service';
 
 @Component({
@@ -15,11 +15,43 @@ export class InicioPage implements OnInit {
   constructor(
     private excelService: ExcelService,
     private toastController: ToastController,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private alertController: AlertController
   ) {}
 
   ngOnInit() {
     this.loadExcelData();
+  }
+
+  recargar(){
+    window.location.reload();
+  }
+
+  alertaConfirmacion(){
+    const alert = this.alertController.create({
+      header:'Confirmar',
+      message:'Seguro?',
+      buttons: [{
+        text:'cancelar',
+        role:'cancel',
+        cssClass:'secondary',
+        handler: () => {
+          console.log("cancelado");
+        }
+      },
+      {
+        text:'Eliminar',
+        handler: () => {
+          this.eliminarFirebase();
+        }
+      }
+    ]
+    });
+  }
+
+  eliminarFirebase(){
+    this.excelService.eliminarColeccion('excel');
+    alert("Coleccion eliminada");
   }
 
   // Método para cargar los datos

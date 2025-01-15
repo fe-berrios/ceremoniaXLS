@@ -34,7 +34,9 @@ export class ExcelService {
           const headers = jsonData[0] as string[];
           const rows = jsonData.slice(1);
 
-          const formattedData = rows.map((row) => {
+          const filteredRows = rows.filter(row => row.some(cell => cell !== null && cell !== ''));
+
+          const formattedData = filteredRows.map((row) => {
             const record: Record<string, any> = {};
             headers.forEach((header, index) => {
               record[header] = row[index] ?? null;
@@ -60,5 +62,14 @@ export class ExcelService {
   // Método para obtener la colección
   getExcelData(): Observable<any[]> {
     return this.firestore.collection('excel').valueChanges();
+  }
+
+  async eliminarColeccion(idColeccion: string){
+    const collectionRef = this.firestore.collection(idColeccion);
+    const snapshot = await collectionRef.get().toPromise();
+
+    snapshot?.forEach((doc) => {
+      collectionRef.doc(doc.id).delete();
+    })
   }
 }
