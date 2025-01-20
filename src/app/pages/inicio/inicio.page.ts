@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastController, LoadingController, AlertController } from '@ionic/angular';
 import { ExcelService } from 'src/app/services/excel.service';
+import * as XLSX from  'xlsx';
 
 @Component({
   selector: 'app-inicio',
@@ -49,9 +50,29 @@ export class InicioPage implements OnInit {
     });
   }
 
-  eliminarFirebase(){
-    this.excelService.eliminarColeccion('excel');
-    alert("Coleccion eliminada");
+  async eliminarFirebase() {
+    const alerta = await this.alertController.create({
+      header: 'Confirmar',
+      message: '¿Estás seguro de que deseas eliminar los datos?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Acción cancelada');
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.excelService.eliminarColeccion('excel');
+            alert("Colección eliminada");
+          }
+        }
+      ]
+    });
+  
+    await alerta.present();
   }
 
   // Método para cargar los datos
@@ -93,14 +114,26 @@ export class InicioPage implements OnInit {
       this.showToast('Por favor selecciona un archivo.');
       return;
     }
-
+  
     const loading = await this.loadingController.create({
       message: 'Subiendo archivo...',
     });
     await loading.present();
-
+  
     try {
-      await this.excelService.processExcel(this.file);
+      // Procesar el archivo Excel y obtener los datos
+      const excelData = await this.excelService.processExcel(this.file);
+  
+      // Agregar la columna 'asistencia' a los datos
+      excelData.forEach(row => {
+        row['ASISTENCIA'] = false;  // Valor predeterminado de la columna 'asistencia'
+      });
+  
+      // Subir los datos a Firebase
+      for (const record of excelData) {
+        await this.excelService.addRecordToFirestore(record);
+      }
+  
       this.showToast('Archivo subido exitosamente a Firebase.');
     } catch (error) {
       console.error('Error al subir el archivo Excel:', error);
@@ -108,6 +141,23 @@ export class InicioPage implements OnInit {
     } finally {
       loading.dismiss();
     }
+  }
+
+  async exportarExcel(){
+    // Rescata los datos de la tabla por id
+    const tabla: HTMLTableElement = document.getElementById('xlsx_tabla') as HTMLTableElement;
+
+    // Escribe los datos de tabla a excel sheet
+    const escribir_datos: XLSX.WorkSheet = XLSX.utils.table_to_sheet(tabla);
+
+    // Crea un nuevo libro excel
+    const libroExcel: XLSX.WorkBook = XLSX.utils.book_new();
+
+    // Junta los datos rescatados con el libro de excel creado.
+    XLSX.utils.book_append_sheet(libroExcel, escribir_datos, 'Datos');
+
+    // Escribe/crea el archivo.
+    XLSX.writeFile(libroExcel, 'datos_excel.xlsx')
   }
 
   // Mostrar mensajes de notificación

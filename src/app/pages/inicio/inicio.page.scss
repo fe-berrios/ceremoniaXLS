@@ -16,3 +16,82 @@ ion-card-content {
   th {
     background-color: #f4f4f4;
   }
+
+
+  .custom-button {
+    padding-bottom: 4px;
+    --background: #ff9999; /* Fondo del botón */
+    --color: #ff2222; /* Color del texto */
+    --box-shadow: 0 0 0 2px #ff4545
+  }
+
+  .custom-card {
+    --background: #2c6fd4; /* Color de fondo de la tarjeta */
+    --ion-card-background: #275fb4; /* Asegura compatibilidad con versiones anteriores */
+    border-radius: 15px; /* Bordes redondeados */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra de la tarjeta */
+    padding: 15px; /* Espaciado interno */
+    color: #ffffff; /* Color del texto */
+  }
+
+  .custom-card-upper {
+    --background: #2c6fd4; /* Color de fondo de la tarjeta */
+    --ion-card-background: #275fb4; /* Asegura compatibilidad con versiones anteriores */
+    border-radius: 15px; /* Bordes redondeados */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra de la tarjeta */
+    padding: 15px; /* Espaciado interno */
+    color: #ffffff; /* Color del texto */
+  }
+
+  .custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+  }
+  
+  .custom-table th {
+    background-color: #96abe6; /* Color del encabezado */
+    color: rgb(255, 255, 255);
+    padding: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  .custom-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+  }
+  
+  .custom-table tr.alternate-row {
+    background-color: #457fd6; /* Color para filas alternas */
+  }
+  
+  .custom-table tr:hover {
+    background-color: #578ad6; /* Color al pasar el mouse por una fila */
+  }
+  
+  .custom-upload-button {
+    width: 1500px;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff2222; /* Mismo fondo que .custom-button */
+    color: #7a0000; /* Mismo color de texto que .custom-button */
+    font-size: 13px;
+    border: none;
+    border-radius: 50px; /* Bordes redondeados */
+    box-shadow: 0 0 0 2px #7a0000; /* Sombra consistente */
+    cursor: pointer;
+    text-align: center;
+}
+
+
+.custom-upload-button:hover {
+  background-color: #fd4141; /* Color de fondo al pasar el mouse */
+  box-shadow: 0 0 0 2px #be0000; /* Sombra más intensa */
+}
+
+.file-upload-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 16px 0;
+}

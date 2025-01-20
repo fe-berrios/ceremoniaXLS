@@ -1,42 +1,45 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Inicio</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-  <ion-card>
+  <ion-card class="custom-card-upper">
     <ion-card-header>
-      <ion-card-title>Subir archivo Excel</ion-card-title>
+      <ion-card-title>Manejo de datos</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <p>ALERTA! Si sube un nuevo excel asegurese de que contenga la misma cantidad de columnas que el excel anterior</p>
-      <input type="file" (change)="onFileChange($event)" />
-      <ion-button expand="block" (click)="uploadToFirebase()">Subir a Firebase</ion-button>
-      <ion-button expand="block" (click)="recargar()">Actualizar datos</ion-button>
-      <ion-button expand="block" (click)="eliminarFirebase()">Eliminar datos</ion-button>
+      <p>Aviso importante: Al cargar un nuevo archivo Excel, por favor, asegúrese de que contenga el mismo número de columnas que el archivo anterior para garantizar la compatibilidad.</p>
+      <div class="file-upload-container">
+        <input type="file" id="fileUpload" (change)="onFileChange($event)" style="display: none;" />
+        <label for="fileUpload" class="custom-upload-button">SUBIR DATOS</label>
+      </div>
+      <ion-button class="custom-button" expand="full" shape="round" outline="fill" (click)="uploadToFirebase()">Subir a Firebase</ion-button>
+      <ion-button class="custom-button" expand="full" shape="round" outline="fill" (click)="recargar()">Actualizar datos</ion-button>
+      <ion-button class="custom-button" expand="full" shape="round" outline="fill" (click)="eliminarFirebase()">Eliminar datos</ion-button>
     </ion-card-content>
   </ion-card>
 
-  <ion-card>
+  <ion-card class="custom-card">
     <ion-card-header>
-      <ion-card-title>Datos Subidos</ion-card-title>
+      <ion-card-title>Datos subidos</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <table style="width: 100%; border-collapse: collapse; text-align: left;">
+      <ion-button class="custom-button" expand="full" shape="round" outline="full" (click)="exportarExcel()">Exportar a excel</ion-button>
+      <table class="custom-table" id="xlsx_tabla">
         <thead>
           <tr>
             <!-- Generar encabezados dinámicamente -->
-            <th *ngFor="let column of columns" style="border: 1px solid #ccc; padding: 8px;">
+            <th *ngFor="let column of columns">
               {{ column }}
             </th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let row of excelData">
+          <tr *ngFor="let row of excelData; let i = index" [class.alternate-row]="i % 2 !== 0">
             <!-- Generar celdas dinámicamente -->
-            <td *ngFor="let column of columns" style="border: 1px solid #ccc; padding: 8px;">
-              {{ row[column] }}
+            <td *ngFor="let column of columns">
+              <!-- Si la columna es 'asistencia', mostrar un checkbox -->
+              <ion-checkbox *ngIf="column === 'asistencia'" [(ngModel)]="row[column]" [disabled]="true"></ion-checkbox>
+              <!-- Para otras columnas, mostrar los valores -->
+              <span *ngIf="column !== 'asistencia'">
+                {{ row[column] }}
+              </span>
             </td>
           </tr>
         </tbody>
